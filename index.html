@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Tic-Tac-Toe</title>
+
+    <link href="https://fonts.cdnfonts.com/css/lemonmilk" rel="stylesheet">
+    <style>
+        body{
+            background-color: #242424;
+            margin:0;
+        }
+
+        table{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -105px;
+            margin-left: -105px;
+            background-color: #616161;
+            padding: 10px;
+            border: 4px solid #000000;
+            border-radius: 5px;
+        }
+
+        td{
+            width: 50px;
+            height: 50px;
+            color: #cccccc;
+            font-family: 'Lemon/Milk light', sans-serif;
+            font-size: 25px;
+            cursor: pointer;
+            border: 3px solid #cccccc;
+            border-radius: 3px;
+        }
+
+        .onCellHover:hover{
+            color: #a0a0a0;
+            border: 3px solid #a0a0a0;
+        }
+
+        .popup{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -76.5px;
+            margin-left: -151.5px;
+            height: fit-content;
+            width: 265px;
+            border: 4px solid #000000;
+            border-radius:5px;
+            background-color: #616161;
+            padding:15px;
+        }
+
+        .textOnThePopup{
+            color: #ffffff;
+            text-align: center;
+            font-size: 40px;
+        }
+
+        .OKButton{
+            margin-top: 10px;
+            font-size:23px;
+            padding: 5px;
+            margin-right: auto;
+            margin-left:auto;
+            border: 4px solid #000000;
+            width: fit-content;
+            border-radius:5px;
+            background-color: #19862d;
+            cursor: pointer;
+        }
+
+        .OKButton:hover{
+            border: 4px solid #262626;
+            color: #262626;
+            background-color: #20b13b;
+        }
+
+        #ticTacToeText{
+            color: #ffffff;
+            font-size:40px;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body> 
+    <table>
+        <tr>
+            <td id="1" onclick="onSquareClick(1);" class="onCellHover" align="center"> </td>
+            <td id="2" onclick="onSquareClick(2);" class="onCellHover" align="center"> </td>
+            <td id="3" onclick="onSquareClick(3);" class="onCellHover" align="center"> </td>
+        </tr>
+        <tr>
+            <td id="4" onclick="onSquareClick(4);" class="onCellHover" align="center"> </td>
+            <td id="5" onclick="onSquareClick(5);" class="onCellHover" align="center"> </td>
+            <td id="6" onclick="onSquareClick(6);" class="onCellHover" align="center"> </td>
+        </tr>
+        <tr>
+            <td id="7" onclick="onSquareClick(7);" class="onCellHover" align="center"> </td>
+            <td id="8" onclick="onSquareClick(8);" class="onCellHover" align="center"> </td>
+            <td id="9" onclick="onSquareClick(9);" class="onCellHover" align="center"> </td>
+        </tr>
+    </table>
+
+    <script type="text/javascript">
+        var turn=false;
+        var temp;
+
+        function onSquareClick(x){
+            document.getElementById(x).style.cursor="default";
+            document.getElementById(x).classList.remove("onCellHover");
+            document.getElementById(x).style.color="#858585";
+            document.getElementById(x).style.border="3px solid #858585";
+
+            if(!turn && document.getElementById(x).innerHTML==" "){
+                document.getElementById(x).innerHTML="X";
+                turn=true;
+            }else if(turn && document.getElementById(x).innerHTML==" "){
+                document.getElementById(x).innerHTML="0";
+                turn=false;
+            }
+
+            if(
+                //Vertical
+                (document.getElementById(1).innerHTML!=" ")&&(document.getElementById(1).innerHTML==document.getElementById(2).innerHTML)&&(document.getElementById(1).innerHTML==document.getElementById(3).innerHTML)||
+                (document.getElementById(4).innerHTML!=" ")&&(document.getElementById(4).innerHTML==document.getElementById(5).innerHTML)&&(document.getElementById(4).innerHTML==document.getElementById(6).innerHTML)||
+                (document.getElementById(7).innerHTML!=" ")&&(document.getElementById(7).innerHTML==document.getElementById(8).innerHTML)&&(document.getElementById(7).innerHTML==document.getElementById(9).innerHTML)||
+                //Horizontal
+                (document.getElementById(1).innerHTML!=" ")&&(document.getElementById(1).innerHTML==document.getElementById(4).innerHTML)&&(document.getElementById(1).innerHTML==document.getElementById(7).innerHTML)||
+                (document.getElementById(2).innerHTML!=" ")&&(document.getElementById(2).innerHTML==document.getElementById(5).innerHTML)&&(document.getElementById(2).innerHTML==document.getElementById(8).innerHTML)||
+                (document.getElementById(3).innerHTML!=" ")&&(document.getElementById(3).innerHTML==document.getElementById(6).innerHTML)&&(document.getElementById(3).innerHTML==document.getElementById(9).innerHTML)||
+                //Slant
+                (document.getElementById(1).innerHTML!=" ")&&(document.getElementById(1).innerHTML==document.getElementById(5).innerHTML)&&(document.getElementById(1).innerHTML==document.getElementById(9).innerHTML)||
+                (document.getElementById(3).innerHTML!=" ")&&(document.getElementById(3).innerHTML==document.getElementById(5).innerHTML)&&(document.getElementById(3).innerHTML==document.getElementById(7).innerHTML)
+            ){
+                if(turn){
+                    var popup = document.createElement("div");
+                    popup.className = "popup";
+                    popup.innerHTML='<div class="textOnThePopup">`X` wins!</div><div class="OKButton" onclick="document.location.reload(true);">Ok.</div>';
+                    document.body.appendChild(popup);
+                    return
+                }
+                else{
+                    var popup = document.createElement("div");
+                    popup.className = "popup";
+                    popup.innerHTML='<div class="textOnThePopup">`O` wins!</div><div class="OKButton" onclick="document.location.reload(true);">Ok.</div>';
+                    document.body.appendChild(popup);
+                    return
+                }
+            }
+
+            temp=true;
+            for(var i=1;i<10;i++){
+                if(document.getElementById(i).innerHTML==" "){
+                    temp=false;
+                }
+            }
+            if(temp){
+                var popup = document.createElement("div");
+                popup.className = "popup";
+                popup.innerHTML='<div class="textOnThePopup">It\'s a tie!</div><div class="OKButton" onclick="document.location.reload(true);">Ok.</div>';
+                document.body.appendChild(popup);
+            }
+        }
+
+        var ticTacToeText=document.createElement("div");
+        ticTacToeText.id="ticTacToeText";
+        ticTacToeText.innerHTML="Tic-Tac-Toe";
+        async function checkForWindowHeight(){
+            while(true){
+                if(window.innerHeight<424){
+                    if(document.getElementById("ticTacToeText")!=null){
+                        document.getElementById("ticTacToeText").remove();
+                    }
+                }else{
+                    if(document.getElementById("ticTacToeText")==null){
+                        document.body.prepend(ticTacToeText);
+                    }
+                }
+                await new Promise(resolve => setTimeout(resolve, 1));
+            }
+        }
+        checkForWindowHeight();
+    </script>
+</body>
+</html>
